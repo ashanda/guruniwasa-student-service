@@ -93,11 +93,13 @@ class VideoController extends Controller
     }
 
     
-    public function videoMonthlySet()
+    public function videoMonthlySet(Request $request)
     {
+        
         try{
-
-            return view('web.videos.monthly_set');
+            $data = $request->data;
+            
+            return view('web.videos.monthly_set',compact('data'));
 
         }catch(\Exception $exception){
 

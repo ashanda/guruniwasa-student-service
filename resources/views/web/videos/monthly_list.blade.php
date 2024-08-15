@@ -8,6 +8,7 @@
 @else
      <script>window.location = "{{ route('web.logout') }}";</script>
 @endif
+
 <div class="container-fluid">
    <div class="row align-items-center pt-2">
       <div class="col-lg-3 col-sm-3">
@@ -39,8 +40,8 @@
                      alt="Guru Niwasa LMS">
                </div>
             </div>
-            <p class="font-14 fw-500 text-dark text-start">Grade - <span class="fw-bolder">{{ $videoRecord['grade_id'] }}</span></p>
-            <p class="font-14 fw-500 text-dark text-start">Subject - <span class="fw-bolder"> {{ $videoRecord['lesson_title'] }}
+            <p class="font-14 fw-500 text-dark text-start">Grade - <span class="fw-bolder">{{ $videoRecord['grade'] }}</span></p>
+            <p class="font-14 fw-500 text-dark text-start">Subject - <span class="fw-bolder"> {{ $videoRecord['lesson_title'] }} | {{ $videoRecord['teacher_name'] }}
                </span>
             </p>
             <p class="font-14 fw-500 text-dark text-start">Month - <span class="fw-bolder text-dark"> {{ $body['data']['month']}}
@@ -51,8 +52,7 @@
                <div class="col-lg-10 text-white">
 
 
-
-                <a href="{{ route('web.video.set.monthly') }}" class=" w-100 text-uppercase font-14 text-white rounded-pill py-2 px-3 bg-primary fw-500 align-items-center   hvr-shrink">CLICK TO VIEW</a>
+                <a href="{{ route('web.video.set.monthly', ['data' => $videoRecord]) }}" class=" w-100 text-uppercase font-14 text-white rounded-pill py-2 px-3 bg-primary fw-500 align-items-center   hvr-shrink">CLICK TO VIEW</a>
 
                </div>
             </div>
