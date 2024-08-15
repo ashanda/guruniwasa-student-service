@@ -3,6 +3,7 @@
 @php
 use Carbon\Carbon;
 @endphp
+{{-- {{ dd($body) }} --}}
 <div class="container-fluid">
    <div class="row align-items-center pt-2">
       <div class="col-lg-3 col-sm-3">
@@ -39,12 +40,19 @@ use Carbon\Carbon;
                   </tr>
                </thead>
                <tbody class="font-14 align-items-center fw-500">
+                  @foreach($body['data']['notes'] as $note)
                   <tr>
-                     <td>JANUARY</td>
-                     <td>Grade 6 - Unit 05 - Light and Vision
-                        (English Medium)
+                     @php
+                        // Parse the given date string using Carbon
+                        $date = \Carbon\Carbon::parse($note['created_at']);
+                        // Format the date to display the month in uppercase
+                        $month = strtoupper($date->format('F'));
+                     @endphp
+                     <td>{{ $month }}</td>
+                     <td>{{ $note['grade']['gname'] }} - {{ $note['title'] }}
                      </td>
                      <td><input class="form-control font-14 fw-500 text-dark" type="file" id="formFileMultiple" multiple=""></td>
+
                      <td>
                         <button type="button" class="btn btn-danger px-3 fw-bolder rounded-pill text-uppercase font-12"> TEACHER REJECTED
                         </button>
@@ -52,20 +60,8 @@ use Carbon\Carbon;
                      <td>Very Good
                      </td>
                   </tr>
-                  <tr>
-                     <td>JANUARY</td>
-                     <td>Grade 6 - Unit 05 - Light and Vision
-                        (English Medium)
-                     </td>
-                     <td><input class="form-control font-14 fw-500 text-dark" type="file" id="formFileMultiple" multiple=""></td>
-                     <td>
-                        <button type="button" class="btn btn-success px-3 fw-bolder rounded-pill text-uppercase font-12"> TEACHER APPROVED
+                  @endforeach
 
-                        </button>
-                     </td>
-                     <td>Very Good
-                     </td>
-                  </tr>
                </tbody>
             </table>
          </div>

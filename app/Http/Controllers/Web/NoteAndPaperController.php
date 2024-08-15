@@ -19,7 +19,7 @@ class NoteAndPaperController extends Controller
         $accessToken = $request->cookie('access_token');
 
        
-       //try {
+       try {
             $response = $client->get($url, [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $accessToken,
@@ -42,26 +42,53 @@ class NoteAndPaperController extends Controller
                     return redirect()->back();
                 }
             }
+       } catch (\Exception $e) {
+            // Log the error if needed and handle exceptions
+                    Alert::toast($e->getMessage(), 'error');
+                    return redirect()->back();
+        }
+
+       
+        
+    }
+
+    public function notePaperList(Request $request,$id)
+    {
+
+
+         $client = new Client();
+        
+        // Fetch the API Gateway URL from the environment variables
+        $url = env('API_GETWAY_URL') . '/api/v1/note-paper-list';
+        $accessToken = $request->cookie('access_token');
+
+       
+      // try {
+            $response = $client->get($url, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $accessToken,
+                ],
+                'json' => [
+                    'subject_id' => $id
+                ]
+            ]);
+       
+            if ($response->getStatusCode() == 200) {
+                
+                $body = json_decode($response->getBody(), true);
+                
+                if (isset($body['status']) && $body['status'] === 200) {
+                   
+                    return view('web.note-paper.list_view',compact('body'));
+                }
+            }
     //    } catch (\Exception $e) {
     //         // Log the error if needed and handle exceptions
     //                 Alert::toast($e->getMessage(), 'error');
     //                 return redirect()->back();
     //     }
 
-       
         
-    }
-
-    public function notePaperList()
-    {
-        try{
-
-            return view('web.note-paper.list_view');
-
-        }catch(\Exception $exception){
-
-            return;
-        }
     }
 
     

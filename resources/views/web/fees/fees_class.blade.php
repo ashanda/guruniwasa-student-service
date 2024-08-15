@@ -50,7 +50,7 @@ use Carbon\Carbon;
             </p>
             <div class="row justify-content-center pt-4">
                <div class="col-lg-10 text-white e">
-                  <a href="{{ route('web.video.set.monthly') }}"
+                  <a href="{{ route('web.subject-cart')}}"
                      class=" w-100 text-uppercase font-14 text-white rounded-pill py-2 px-3 bg-success fw-500 align-items-center text-white hvr-shrink">
                   ADD TO CART
                   </a>
@@ -79,7 +79,7 @@ use Carbon\Carbon;
            </p>
            <div class="row justify-content-center pt-4">
               <div class="col-lg-10 text-white e">
-                 <a href="{{ route('web.video.set.monthly') }}"
+                 <a href="{{ route('web.subject-cart')}}"
                     class=" w-100 text-uppercase font-14 text-white rounded-pill py-2 px-3 bg-success fw-500 align-items-center text-white hvr-shrink">
                  ADD TO CART
                  </a>
@@ -118,7 +118,7 @@ use Carbon\Carbon;
      </div>
      <div class="row justify-content-center ">
         <div class="col-lg-3 col-10 text-center pt-4">
-            <a href="{{ route('web.payment.month') }}" class=" w-100 text-uppercase font-15  rounded-pill p-3 bg-secondary fw-500 align-items-center text-white hvr-shrink">PAYMENT HISTORY
+            <a href="{{ route('web.subject-cart')}}" class=" w-100 text-uppercase font-15  rounded-pill p-3 bg-secondary fw-500 align-items-center text-white hvr-shrink">PAYMENT HISTORY
             </a>
         </div>
 
