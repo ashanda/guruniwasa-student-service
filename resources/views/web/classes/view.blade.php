@@ -1,5 +1,6 @@
 @extends('web.layouts.app')
 @section('content')
+
 @php
  use Carbon\Carbon;
   @endphp
@@ -35,8 +36,8 @@
                         <img class="d-block w-100 rounded-circle" src="{{ asset('themes/default/img/place-holder.png') }}" alt="Guru Niwasa LMS">
                     </div>
                 </div>
-                <p class="font-14 fw-500 text-dark text-start">Grade - <span class="fw-bolder">Grade {{ $lesson['grade_id'] }}</span></p>
-                <p class="font-14 fw-500 text-dark text-start">Subject - <span class="fw-bolder">{{ $lesson['lesson_title'] }}</span></p>
+                <p class="font-14 fw-500 text-dark text-start">Grade - <span class="fw-bolder">{{ $lesson['grade'] }}</span></p>
+                <p class="font-14 fw-500 text-dark text-start">Subject - <span class="fw-bolder">{{ $lesson['lesson_title'] }} | {{ $lesson['teacher_name'] }}</span></p>
                 <p class="font-14 fw-500 text-dark text-start">Class Status - <span class="fw-bolder text-success">{{ $lesson['status']}}</span></p>
                 <p class="font-14 fw-500 text-dark text-start">Special Note - <span class="fw-bolder font-12">{{ $lesson['special_note'] }}</span></p>
                 <p class="font-14 fw-500 text-dark text-start">Zoom Password - <span class="fw-bolder">{{ $lesson['password'] }}</span></p>

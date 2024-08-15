@@ -1,5 +1,6 @@
 @extends('web.layouts.app')
 @section('content')
+
 <div class="container-fluid">
    <div class="row align-items-center pt-2">
       <div class="col-lg-3 col-sm-3">
@@ -12,7 +13,7 @@
          <h1 class="font-36 fw-bold text-uppercase text-purple">CLASS TUTES AND BOOKS
 
          </h1>
-         <p class="font-20 fw-500 text-purple">JANUARY / GRADE 06
+         <p class="font-20 fw-500 text-purple">{{ $body['data']['month']}} / {{ $body['data']['grade']}}
 
          </p>
       </div>
@@ -20,21 +21,21 @@
 </div>
 <div class="container-fluid py-lg-5 py-3 px-lg-5 ">
    <div class="row middle-hight">
+       @foreach($body['data']['class_tutes'] as $classTute)
       <div  class="col-lg-3 col-sm-4 mb-3 align-items-center">
          <div class="border-new pt-3 pb-5 px-3 rounded-35 bg-white text-center">
 
             <div class="row justify-content-center pt-2 pb-3">
                <div class="col-6">
-                  <img class="d-block w-100 rounded-circle" src="{{asset('themes/default/img/place-holder.png')}}"
+                  <img class="d-block w-100 rounded-circle" src="{{asset('themes/default/img/tute-book.png')}}"
                      alt="Guru Niwasa LMS">
                </div>
             </div>
-            <p class="font-14 fw-500 text-dark text-start">Grade - <span class="fw-bolder">Grade 6</span></p>
-            <p class="font-14 fw-500 text-dark text-start">Subject - <span class="fw-bolder"> Mathematics Theory | English
-               Medium | Shehan Sir
+            <p class="font-14 fw-500 text-dark text-start">Topic - <span class="fw-bolder">{{ $classTute['lesson_title'] }}</span></p>
+            <p class="font-14 fw-500 text-dark text-start">Subject - <span class="fw-bolder">  {{ $classTute['lesson_title'] }} | {{ $classTute['teacher_name'] }}
                </span>
             </p>
-            <p class="font-14 fw-500 text-dark text-start">Month - <span class="fw-bolder text-dark"> January
+            <p class="font-14 fw-500 text-dark text-start">Month - <span class="fw-bolder text-dark"> {{ $body['data']['month']}}
                </span>
             </p>
 
@@ -42,15 +43,14 @@
                <div class="col-lg-10 text-white e">
 
 
-
-                <a href="{{ route('web.tutes.open') }}" class=" w-100 text-uppercase font-14 text-white rounded-pill py-2 px-3 bg-primary fw-500 align-items-center   hvr-shrink">CLICK TO VIEW</a>
-
+                  <a href="{{  env('AWS_USER_BUCKET').$classTute['tute_url'] }}" class=" w-100 text-uppercase font-14 text-white rounded-pill py-2 px-3 bg-success fw-500 align-items-center text-white hvr-shrink" target="_blank"> Click to View</a>
+               
                </div>
             </div>
          </div>
 
       </div>
-
+   @endforeach
 
 
 
