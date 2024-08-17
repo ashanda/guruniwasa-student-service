@@ -96,6 +96,7 @@ Route::get('/payment-history-list', [PaymentHistoryController::class, 'paymentHi
 // NoteAndPaperController
 Route::get('/note-paper-ansewer', [NoteAndPaperController::class, 'notePaper'])->name('web.note-paper.ansewer');
 Route::get('/note-paper-ansewer-list/{id}', [NoteAndPaperController::class, 'notePaperList'])->name('web.note-paper.list');
+Route::post('/note-paper-ansewer-upload', [NoteAndPaperController::class, 'notePaperUpload'])->name('web.note.upload');
 
 
 

@@ -1,6 +1,6 @@
 @extends('web.layouts.app')
 @section('content')
-
+{{ dd($body) }}
 <div class="container-fluid">
    <div class="row align-items-center pt-2">
       <div class="col-lg-3 col-sm-3">
