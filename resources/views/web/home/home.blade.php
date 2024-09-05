@@ -22,7 +22,7 @@
          </h1>
       </div>
       <div class="col-lg-3 col-sm-4">
-         <div class="row  justify-content-center">
+         {{-- <div class="row  justify-content-center">
             <div class="col-12 pe-lg-5 pt-lg-0 pt-3">
                <div class="form-check form-switch cus-switch ">
                   <div class="row align-items-end">
@@ -35,7 +35,7 @@
                   </div>
                </div>
             </div>
-         </div>
+         </div> --}}
          <div class="row  justify-content-center">
             <div class="col-12   pt-lg-0 pt-3">
                <div class="form-check form-switch ">
@@ -54,7 +54,7 @@
    </div>
 </div>
 <div class="container-fluid py-lg-5 py-3 px-lg-5 ">
-   <div   id="basicMenuList">
+   {{-- <div   id="basicMenuList">
       <div class="row justify-content-around align-items-center mx-auto">
          <div class="col-lg-1"></div>
          <div class="col-lg-3 col-sm-5  col-10 ">
@@ -131,8 +131,8 @@
             </a>
          </div>
       </div>
-   </div>
-   <div class="d-none" id="advaceMenuList">
+   </div> --}}
+   <div class="" id="advaceMenuList">
       <div class="row align-items-center">
          <div class="col-lg-3 col-sm-4  col-10  px-3  mb-3 mx-auto">
             <a href="{{ route('web.class.view') }}"  class="hvr-shrink w-100">
@@ -384,7 +384,7 @@
 }
 </style>
 
-<div class="container text-center">
+{{-- <div class="container text-center">
   <div id="qrCodeSquareFrame">
     <div class="centered">
       <div id="qrcode">
@@ -393,6 +393,6 @@
       </div>
     </div>
   </div>
-</div>
+</div> --}}
 
 @endsection

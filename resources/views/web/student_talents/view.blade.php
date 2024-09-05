@@ -3,6 +3,14 @@
 @php
 use Carbon\Carbon;
 @endphp
+@if(session()->has('student_data'))
+    @php
+        $studentData = session('student_data');
+        
+    @endphp
+@else
+     <script>window.location = "{{ route('web.logout') }}";</script>
+@endif
 <div class="container-fluid">
    <div class="row align-items-center pt-2">
       <div class="col-lg-3 col-sm-3">
@@ -14,7 +22,7 @@ use Carbon\Carbon;
       <div class="col-lg-6 col-sm-6 text-center">
          <h1 class="font-36 fw-bold text-uppercase text-purple">STUDENT TALENTS
          </h1>
-         <p class="font-20 fw-500 text-purple">< STUDENT NAME > - < GRADE >
+         <p class="font-20 fw-500 text-purple">< {{ $studentData['full_name'] }} > - < {{ $studentData['grades']['gname'] }} >
          </p>
       </div>
    </div>

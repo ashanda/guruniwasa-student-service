@@ -340,9 +340,18 @@ use Carbon\Carbon;
 
 
 
-            <div class="text-center">
-               <p class="font-18 fw-bold   text-dark">Or</p>
-               <button class="btn btn-warning fw-500 font-13 text-white" data-bs-toggle="modal" data-bs-target="#paymentView">Card Payment</button>
+           <style>
+                    .custom-checkbox {
+                    width: 20px; /* Adjust the width */
+                    height: 20px; /* Adjust the height */
+                    accent-color: #007bff; /* Optional: Change the checkbox color */
+                     }
+                </style>
+
+                <div class="text-center">
+                    <p class="font-18 fw-bold   text-dark">Or</p>
+                    <input type="checkbox" name="check" id="check" class="custom-checkbox"> I Agreed <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms & Conditions</a><br>
+               <button class="btn btn-warning fw-500 font-13 text-white mt-2" id="paymentButton" data-bs-toggle="modal" data-bs-target="#paymentView">Card Payment</button>
                <div class="mt-2">
                 <img class="w-100 mx-auto" src="{{ asset('themes/default/img/credit-cards.png') }}"
                 alt="Guru Niwasa LMS"  >
@@ -350,7 +359,134 @@ use Carbon\Carbon;
             </div>
          </div>
       </div>
+<div class="col-md-12">
+            <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+                <div class="modal-dialog custom-width">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="termsModalLabel">Terms & Conditions</h5>
+                            <button type="button"  class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <style>
+                            .policy-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
 
+.policy-section {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #555;
+}
+
+.policy-section h4 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #444;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.policy-section p {
+    margin-bottom: 15px;
+}
+
+.policy-section ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.policy-section li {
+    margin-bottom: 10px;
+}
+
+.policy-section strong {
+    color: #333;
+}
+.custom-width {
+    max-width: 800px; /* You can adjust this value as needed */
+}
+
+@media (max-width: 768px) {
+    .custom-width {
+        max-width: 100%; /* Adjust for smaller screens */
+    }
+}
+                         </style>   
+                        <div class="modal-body">
+                            <!-- Your Terms & Conditions content goes here -->
+                            <div class="policy-section">
+    <h4>1.Purchase Options</h4>
+    <p>Pick-Up Location: Students can collect their items directly from our designated pick-up point, paying only the item value.</p>
+    <p>Doorstep Delivery: Students can opt for delivery, which requires payment for both the item value and delivery charges. Delivery charges vary based on parcel weight and must be paid in advance along with the item value.</p>
+
+    <h4>2.Payment Methods</h4>
+    <p>Students can choose from the following payment options:</p>
+    <ul>
+        <li>Card Payment</li>
+        <li>Bank Transfer (with slip upload)</li>
+        <li>Cash or Card Payment at the Office</li>
+    </ul>
+
+    <h4>3.Shipping and Delivery</h4>
+    <p>We will dispatch parcels within 14 days of the order date. For doorstep delivery, the delivery charges are determined by the parcel's weight and must be prepaid.</p>
+
+    <h4>4.Refund and Exchange Conditions</h4>
+    <ul>
+        <li>Refund for Ordered Items: If a student wants a refund after payment (including delivery if applicable), they must request a refund within two days of the payment date before the ready-to-dispatch status. This can be done by contacting our office.</li>
+        <li>Wrong or Damaged Items: If a student receives the wrong parcel, incorrect items, or damaged items due to a mistake by our printing unit, they should return the parcel to our office without paying the return delivery charges. The item(s) must be in their original condition, and unused. We will cover the cost of the return delivery. A replacement parcel will be sent within five days, free of charge.</li>
+        <li>Exchanges for Incorrect Orders: If a student orders the wrong item and wishes to exchange it, they must return the parcel to us. The student is responsible for both the return delivery charge and the delivery charge for sending the new parcel. We will dispatch the correct items within 10 days of receiving the return. The returned items must be in the same condition as when sent (no damage accepted).</li>
+    </ul>
+
+    <h4>5.Contact Information</h4>
+    <p>For any inquiries or refund requests, please contact our office at 077 287 9970.</p>
+    <p>Guru Niwasa Institute<br>
+    077 287 9970<br>
+    <a href="mailto:guruniwasafinance@gmail.com">guruniwasafinance@gmail.com</a></p>
+</div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <p class="policy-title mt-5">Item Shop Refund Policy</p>
+                                <div class="policy-section">
+    <h4>1.Purchase Options</h4>
+    <p>Pick-Up Location: Students can collect their items directly from our designated pick-up point, paying only the item value.</p>
+    <p>Doorstep Delivery: Students can opt for delivery, which requires payment for both the item value and delivery charges. Delivery charges vary based on parcel weight and must be paid in advance along with the item value.</p>
+
+    <h4>2.Payment Methods</h4>
+    <p>Students can choose from the following payment options:</p>
+    <ul>
+        <li>Card Payment</li>
+        <li>Bank Transfer (with slip upload)</li>
+        <li>Cash or Card Payment at the Office</li>
+    </ul>
+
+    <h4>3.Shipping and Delivery</h4>
+    <p>We will dispatch parcels within 14 days of the order date. For doorstep delivery, the delivery charges are determined by the parcel's weight and must be prepaid.</p>
+
+    <h4>4.Refund and Exchange Conditions</h4>
+    <ul>
+        <li>Refund for Ordered Items: If a student wants a refund after payment (including delivery if applicable), they must request a refund within two days of the payment date before the ready-to-dispatch status. This can be done by contacting our office.</li>
+        <li>Wrong or Damaged Items: If a student receives the wrong parcel, incorrect items, or damaged items due to a mistake by our printing unit, they should return the parcel to our office without paying the return delivery charges. The item(s) must be in their original condition, and unused. We will cover the cost of the return delivery. A replacement parcel will be sent within five days, free of charge.</li>
+        <li>Exchanges for Incorrect Orders: If a student orders the wrong item and wishes to exchange it, they must return the parcel to us. The student is responsible for both the return delivery charge and the delivery charge for sending the new parcel. We will dispatch the correct items within 10 days of receiving the return. The returned items must be in the same condition as when sent (no damage accepted).</li>
+    </ul>
+
+    <h4>5.Contact Information</h4>
+    <p>For any inquiries or refund requests, please contact our office at 077 287 9970.</p>
+    <p>Guru Niwasa Institute<br>
+    077 287 9970<br>
+    <a href="mailto:guruniwasafinance@gmail.com">guruniwasafinance@gmail.com</a></p>
+</div>
+
+        </div>
 
 
 
@@ -457,4 +593,20 @@ use Carbon\Carbon;
       </div>
    </div>
 </div>
+@endsection
+@section('scripts')
+<script>
+    // Get the checkbox and button elements
+    const checkbox = document.getElementById('check');
+    const paymentButton = document.getElementById('paymentButton');
+
+    // Ensure the button is disabled by default when the page loads
+    paymentButton.disabled = true;
+
+    // Add an event listener to the checkbox
+    checkbox.addEventListener('change', function() {
+        // Enable the button if the checkbox is checked, disable if unchecked
+        paymentButton.disabled = !this.checked;
+    });
+</script>
 @endsection

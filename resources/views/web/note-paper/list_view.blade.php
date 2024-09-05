@@ -3,6 +3,15 @@
 @php
 use Carbon\Carbon;
 @endphp
+
+@if(session()->has('student_data'))
+    @php
+        $studentData = session('student_data');
+        
+    @endphp
+@else
+     <script>window.location = "{{ route('web.logout') }}";</script>
+@endif
 <div class="container-fluid">
    <div class="row align-items-center pt-2">
       <div class="col-lg-3 col-sm-3">
@@ -14,7 +23,7 @@ use Carbon\Carbon;
       <div class="col-lg-6 col-sm-6 text-center">
          <h1 class="font-30 fw-bold text-uppercase text-purple">STUDENT NOTES AND PAPER ANSWERS 
          </h1>
-         <p class="font-20 fw-500 text-purple">GRADE 6 - SCIENCE
+         {{-- <p class="font-20 fw-500 text-purple">GRADE 6 - SCIENCE --}}
          </p>
       </div>
    </div>
@@ -39,33 +48,78 @@ use Carbon\Carbon;
                   </tr>
                </thead>
                <tbody class="font-14 align-items-center fw-500">
+                  @foreach($body['data']['notes'] as $note)
                   <tr>
-                     <td>JANUARY</td>
-                     <td>Grade 6 - Unit 05 - Light and Vision
-                        (English Medium)
-                     </td>
-                     <td><input class="form-control font-14 fw-500 text-dark" type="file" id="formFileMultiple" multiple=""></td>
-                     <td>
-                        <button type="button" class="btn btn-danger px-3 fw-bolder rounded-pill text-uppercase font-12"> TEACHER REJECTED
-                        </button>
-                     </td>
-                     <td>Very Good
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>JANUARY</td>
-                     <td>Grade 6 - Unit 05 - Light and Vision
-                        (English Medium)
-                     </td>
-                     <td><input class="form-control font-14 fw-500 text-dark" type="file" id="formFileMultiple" multiple=""></td>
-                     <td>
-                        <button type="button" class="btn btn-success px-3 fw-bolder rounded-pill text-uppercase font-12"> TEACHER APPROVED
+                     @php
+                        // Parse the given date string using Carbon
+                        $date = \Carbon\Carbon::parse($note['created_at']);
+                        // Format the date to display the month in uppercase
+                        $month = strtoupper($date->format('F'));
+                     @endphp
+                     <td>{{ $month }}</td>
+                     <td>{{ $note['grade']['gname'] }} - {{ $note['title'] }}</td>
+                     
+                     @if(!empty($note['student_uploads']))
+                     @foreach ($note['student_uploads'] as $upload)
+                     @if($upload['status'] == 0)
+                     <td>{{ 'Wait for teacher approval' }}</td>
 
+                     @elseif($upload['status'] == 1 || $upload['status'] == null)
+                     <td>{{ 'Teacher approved' }}</td>
+                     @else
+                     <form action="{{ route('web.note.upload') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <td><input class="form-control font-14 fw-500 text-dark" type="file" id="formFileMultiple" name="document" multiple="">
+                           <input type="hidden" name="student_id" value="{{ $studentData['id'] }}">
+                           <input type="hidden" name="note_id" value="{{ $note['id'] }}">
+                           <input type="hidden" name="teacher_id" value="{{ $note['teacher_id'] }}">
+                           <input type="hidden" name="grade_id" value="{{ $note['grade_id'] }}">
+                           <input type="hidden" name="subject_id" value="{{ $note['subject_id'] }}">
+                           <button type="submit" class="btn btn-primary mt-2">Upload</button>
+                        </td>
+                        
+                     </form>
+                     @endif
+                     @endforeach
+                     @else
+
+                     <form action="{{ route('web.note.upload') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <td><input class="form-control font-14 fw-500 text-dark" type="file" id="formFileMultiple" name="document" multiple="">
+                           <input type="hidden" name="student_id" value="{{ $studentData['id'] }}">
+                           <input type="hidden" name="note_id" value="{{ $note['id'] }}">
+                           <input type="hidden" name="teacher_id" value="{{ $note['teacher_id'] }}">
+                           <input type="hidden" name="grade_id" value="{{ $note['grade_id'] }}">
+                           <input type="hidden" name="subject_id" value="{{ $note['subject_id'] }}">
+                           <button type="submit" class="btn btn-primary mt-2">Upload</button>
+                        </td>
+                        
+                     </form>
+                     @endif
+                     <td>
+                    @if(!empty($note['student_uploads']))    
+                  @foreach ($note['student_uploads'] as $upload)
+                     @if($upload['status'] == 0)
+                     <button type="button" class="btn btn-warning px-3 fw-bolder rounded-pill text-uppercase font-12"> TEACHER NOT APPROVED
                         </button>
+
+                     @elseif($upload['status'] == 1)
+                    <button type="button" class="btn btn-success px-3 fw-bolder rounded-pill text-uppercase font-12"> TEACHER APPROVED
+                        </button>
+                     @else
+                     <button type="button" class="btn btn-danger px-3 fw-bolder rounded-pill text-uppercase font-12"> TEACHER REJECTED
+                        </button>
+                     @endif
+                        
                      </td>
-                     <td>Very Good
-                     </td>
+                  @endforeach
+                  @endif
+                  @if(!empty($note['student_uploads'])) 
+                     <td>Very Good</td>
+                  @endif   
                   </tr>
+                 
+               @endforeach
                </tbody>
             </table>
          </div>

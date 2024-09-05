@@ -23,6 +23,7 @@
       @include('web.layouts.headers.header')
       @include('sweetalert::alert')
       @yield('content')
+      
       @include('web.layouts.footers.footer')
       
 
@@ -46,7 +47,7 @@
 
       <script>
          document.getElementById('flexSwitchCheckDefault').addEventListener('change', function () {
-            const toggleDiv = document.getElementById('advaceMenuList');
+             const toggleDiv = document.getElementById('advaceMenuList');
             const toggleDiv1 = document.getElementById('basicMenuList');
             if (this.checked) {
                toggleDiv.classList.remove('d-none');

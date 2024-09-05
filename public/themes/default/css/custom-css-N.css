@@ -826,7 +826,7 @@ a:hover,
 @media (min-width: 1400px) {
 
 .footer-section{
-    position: absolute;
+    /* position: absolute; */
     width: 100%;
     bottom: 0;
 }

@@ -57,8 +57,10 @@
                  
                  <div class="row justify-content-center pt-4">
                     <div class="col-lg-10 text-white">
-                       <a href="{{ route('web.note-paper.list') }}" class="w-100 text-uppercase font-14 text-white rounded-pill py-2 px-3 bg-primary fw-500 align-items-center hvr-shrink">CLICK TO View</a>
-                    </div>
+<a href="{{ route('web.note-paper.list', $studentsubject['data']['student_subjects']['id']) }}" 
+   class="w-100 text-uppercase font-14 text-white rounded-pill py-2 px-3 bg-primary fw-500 align-items-center hvr-shrink">
+   CLICK TO View
+</a>                    </div>
                  </div>
               </div>
            </div>

@@ -116,7 +116,7 @@ class AuthController extends Controller
         try {
             $response = $client->get($url, [
                 'headers' => [
-                     'CLIENT_KEY' => $this->serverApiKey
+                     'CLIENT-KEY' => $this->serverApiKey
                 ]
             ]);
             
@@ -176,7 +176,7 @@ class AuthController extends Controller
         // Make POST request to API endpoint
         $response = $client->post($url, [
             'headers' => [
-                'CLIENT_KEY' => $this->serverApiKey,
+                'CLIENT-KEY' => $this->serverApiKey,
             ],
             'form_params' => [
                 'phone' => $request->phone_number,
@@ -298,7 +298,7 @@ public function registerData(Request $request){
         // Make POST request to API endpoint
         $response = $client->post($url, [
             'headers' => [
-                'CLIENT_KEY' => $this->serverApiKey,
+                'CLIENT-KEY' => $this->serverApiKey,
             ],
             'form_params' => [
                 'username' => $request->phone,
@@ -384,7 +384,7 @@ public function registerData(Request $request){
             $response = $client->post($url, [
                 'headers' => [
                     'Accept' => 'application/json',
-                    'CLIENT_KEY' => $this->serverApiKey
+                    'CLIENT-KEY' => $this->serverApiKey
                 ],
                 'form_params' => [
                     'username' => $request->phone_number,
@@ -420,7 +420,7 @@ public function registerData(Request $request){
             $response = $client->post($url, [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $accessToken,
-                     'CLIENT_KEY' => $this->serverApiKey
+                     'CLIENT-KEY' => $this->serverApiKey
                 ]
             ]);
             if ($response->getStatusCode() == 200) {
