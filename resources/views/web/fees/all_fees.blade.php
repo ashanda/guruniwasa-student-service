@@ -23,35 +23,26 @@ use Carbon\Carbon;
 
       <div class="col-12">
          <div class="fees-Carousel owl-carousel">
-            <div class="border-new py-5 px-3 mx-lg-0 mx-sm-0 mx-3  rounded-35 bg-white text-center">
-               <p
-                  class="font-16 border-2 text-uppercase fw-bold text-purple py-3 rounded-35  border border-primary text-center bg-light-blue">
-                  PAY
-                  CURRENT
-                  MONTH
-               </p>
-               <div class="row justify-content-center pt-4">
-                  <div class="col-lg-10 text-white e">
-                     <a href="{{ route('web.fees.class') }}" class=" w-100 text-uppercase font-14 text-white rounded-pill py-2 px-3 bg-primary fw-500 align-items-center   hvr-shrink">Pay</a>
-                  </div>
-               </div>
-               <h3 class="font-27 fw-bold text-uppercase text-purple pt-3">FEBRUARY</h3>
+               @php $x = 1; @endphp
+               @for ($i = 0; $i < $currentMonth; $i++)
+                     <div class="border-new py-5 px-3 mx-lg-0 mx-sm-0 mx-3  rounded-35 bg-white text-center @if(($i + 1) == $currentMonth) active center @endif">
+                        <p class="font-16 border-2 text-uppercase fw-bold text-purple py-3 rounded-35 border border-primary text-center bg-light-blue">
+                           @if(($i + 1) == $currentMonth)
+                                 {{ 'PAY CURRENT MONTH ' }}
+                           @else
+                                 {{ 'PAY PREVIOUS MONTH ' }}
+                           @endif
+                        </p>
+                        <div class="row justify-content-center pt-4">
+                           <div class="col-lg-10 text-white e">
+                                 <a href="{{ route('web.fees.class',['month' => $x]) }}" class="w-100 text-uppercase font-14 text-white rounded-pill py-2 px-3 bg-primary fw-500 align-items-center hvr-shrink">Pay</a>
+                           </div>
+                        </div>
+                        <h3 class="font-27 fw-bold text-uppercase text-purple pt-3"> {{ $months[$i]['english'] }}</h3>
+                     </div>
+                     @php $x++; @endphp
+               @endfor
             </div>
-
-            <div class="border-new py-5 px-3 mx-lg-0 mx-sm-0 mx-3  rounded-35 bg-white text-center">
-                <p
-                   class="font-16 border-2 text-uppercase fw-bold text-purple py-3 rounded-35  border border-primary text-center bg-light-blue">
-                   PAY
-                   CURRENT
-                   MONTH
-                </p>
-                <div class="row justify-content-center pt-4">
-                   <div class="col-lg-10 text-white e">
-                      <a href="{{ route('web.fees.class') }}" class=" w-100 text-uppercase font-14 text-white rounded-pill py-2 px-3 bg-primary fw-500 align-items-center   hvr-shrink">Pay</a>
-                   </div>
-                </div>
-                <h3 class="font-27 fw-bold text-uppercase text-purple pt-3">March</h3>
-             </div>
          </div>
 
 
@@ -70,4 +61,47 @@ use Carbon\Carbon;
 
 
 </div>
+<div class="modal fade" id="slipUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center py-5">
+                        <div class="success-checkmark">
+                            <div class="check-icon">
+                                <span class="icon-line line-tip"></span>
+                                <span class="icon-line line-long"></span>
+                                <div class="icon-circle"></div>
+                                <div class="icon-fix"></div>
+                            </div>
+                        </div>
+                        <h3 class="font-16 fw-bold  text-purple pt-4">
+                            ඔබගේ ඇණවුම සාර්ථකව LMS පද්ධතියට ඇතුලත් කරන ලදී. එය අනුමත වූ වහාම ඔබ හට පණිවිඩයක් ලබා දෙනු
+                            ලබයි. !!
+                        </h3>
+                        <h3 class="font-16 fw-bold  text-purple pb-4">
+                            ස්තුතියි !!!
+                        </h3>
+                        <h3 class="font-16 fw-bold  text-purple">
+                            Your order has been successfully placed in the LMS. You will receive a message once the
+                            order gets approved!
+                        </h3>
+                        <h3 class="font-16 fw-bold   text-purple">
+                            Thank you !!!
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+@endsection
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @if (session('showModal'))
+            var myModal = new bootstrap.Modal(document.getElementById('slipUpdate'));
+            myModal.show();
+        @endif
+    });
+</script>
 @endsection

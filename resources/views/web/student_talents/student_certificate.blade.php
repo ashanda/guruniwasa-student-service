@@ -1,5 +1,14 @@
 @extends('web.layouts.app')
 @section('content')
+@if(session()->has('student_data'))
+    @php
+        $studentData = session('student_data');
+        
+    @endphp
+@else
+     <script>window.location = "{{ route('web.logout') }}";</script>
+@endif
+
 <div class="container-fluid">
    <div class="row align-items-center pt-2">
       <div class="col-lg-3 col-sm-3">
@@ -11,7 +20,7 @@
       <div class="col-lg-6 col-sm-6 text-center">
          <h1 class="font-36 fw-bold text-uppercase text-purple">STUDENT CERTIFICATES
          </h1>
-         <p class="font-20 fw-500 text-purple">< STUDENT NAME > - < GRADE >
+         <p class="font-20 fw-500 text-purple">< {{ $studentData['full_name'] }} > - < {{ $studentData['grades']['gname'] }} >
          </p>
       </div>
       <div class="col-lg-3 col-sm-3 pt-lg-0 pt-3">
@@ -43,18 +52,20 @@
 <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="uploadCertificate" tabindex="-1" aria-labelledby="uploadCertificate" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <form action="">
+        <form action="{{ route('web.student.certificatesupload') }}" method="post" enctype="multipart/form-data">
+         @csrf
         <div class="modal-body">
 
             <div class="mb-3">
-                <label for="formFileMultiple" class="form-label font-20  fw-bolder text-purple">Multiple Certificate  files  </label>
-                <input class="form-control font-14 fw-500 text-dark" type="file" id="formFileMultiple" multiple>
+                <label for="formFileMultiple" class="form-label font-20  fw-bolder text-purple">Upload Certificate  files  </label>
+                <input type="hidden" name="student_id" value="{{ $studentData['id'] }}">
+                <input class="form-control font-14 fw-500 text-dark" type="file" id="formFileMultiple" name="document" multiple="">
               </div>
 
         </div>
         <div class="modal-footer">
 
-          <button type="button" class="btn text-uppercase font-14 text-white rounded-pill py-2 px-4 bg-primary fw-500 align-items-center text-white hvr-shrink">Submit</button>
+          <button type="submit" class="btn text-uppercase font-14 text-white rounded-pill py-2 px-4 bg-primary fw-500 align-items-center text-white hvr-shrink">Submit</button>
         </div>
     </form>
       </div>
@@ -62,7 +73,9 @@
   </div>
          </div>
       </div>
-      <div  class="col-lg-3 col-sm-4 mb-3 align-items-center">
+      @if(!empty($body['data']['certificate']))
+      @foreach ($body['data']['certificate'] as $certifiacte)
+          <div  class="col-lg-3 col-sm-4 mb-3 align-items-center">
          <div class="border-new pt-3 pb-5 px-3 rounded-35 bg-white text-center">
             <div class="row justify-content-center pt-2 pb-3">
                <div class="col-lg-8">
@@ -72,26 +85,13 @@
             </div>
             <div class="row justify-content-center pt-3">
                <div class="col-lg-10 text-white e">
-                  <a href=" " title="Dowload Certificate" class=" w-100 text-uppercase font-13 text-white rounded-pill py-2 px-3 bg-success fw-500 align-items-center text-white hvr-shrink" download> Dowload Certificate</a>
+                  <a href="{{ env('AWS_USER_BUCKET').$certifiacte['certificate_link'] }}" target="_blank" title="Dowload Certificate" class=" w-100 text-uppercase font-13 text-white rounded-pill py-2 px-3 bg-success fw-500 align-items-center text-white hvr-shrink" download> Dowload Certificate</a>
                </div>
             </div>
          </div>
       </div>
-      <div  class="col-lg-3 col-sm-4 mb-3 align-items-center">
-        <div class="border-new pt-3 pb-5 px-3 rounded-35 bg-white text-center">
-           <div class="row justify-content-center pt-2 pb-3">
-              <div class="col-lg-8">
-                 <img class="d-block w-100 mx-auto border border-secondary" src="{{asset('themes/default/img/certifiacte.jpg')}}"
-                    alt="Guru Niwasa LMS">
-              </div>
-           </div>
-           <div class="row justify-content-center pt-3">
-              <div class="col-lg-10 text-white e">
-                 <a href=" " title="Dowload Certificate" class=" w-100 text-uppercase font-13 text-white rounded-pill py-2 px-3 bg-success fw-500 align-items-center text-white hvr-shrink" download> Dowload Certificate</a>
-              </div>
-           </div>
-        </div>
-     </div>
+      @endforeach
+      @endif
 
    </div>
 </div>

@@ -34,26 +34,24 @@ use Carbon\Carbon;
                             <p class="font-16 text-end fw-bolder text-purple "> AMOUNT </p>
                         </div>
                     </div>
-                    <ul class="list-group fopnt-13 text-dark fw-500">
-                        <li class="list-group-item d-flex justify-content-between align-items-center ">
-                            Science Theory | English Medium | Abhiman Sir
-                            <span class="badge bg-primary rounded-pill">1200.00</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Science Theory | English Medium | Abhiman Sir
-                            <span class="badge bg-primary rounded-pill">1200.00</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Science Theory | English Medium | Abhiman Sir
-                            <span class="badge bg-primary rounded-pill">1200.00</span>
-                        </li>
-                    </ul>
+                    @if(count($cart) > 0)
+                        <ul class="list-group fopnt-13 text-dark fw-500">
+                            @foreach($cart as $item)
+                                <li class="list-group-item d-flex justify-content-between align-items-center ">{{ $item['data']['student_subjects']['sname'] }}| {{ $item['data']['student_subjects']['teacher']['data']['name'] }} | Grade: {{ $item['data']['student_subjects']['grade']['gname'] }} 
+
+                                    <span class="badge bg-primary rounded-pill">LKR {{ $item['data']['student_subjects']['fee'] }}.00</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p>Your cart is empty.</p>
+                    @endif
                 </div>
                 <div class="total-box text-end fopnt-14 text-dark fw-500 bd-blue-100 p-3 rounded-3">
-                    <p>Total: 3600.00</p>
-                    <p>Discount: -600.00</p>
+                    <p>Total: {{ $totalFeeWithoutDiscount }}</p>
+                    <p>Discount: {{ $totalDiscountAmount }}</p>
 
-                    <p><strong>Grand Total: 3300.00</strong></p>
+                    <p><strong>Grand Total: {{ $totalFeeWithDiscount }}</strong></p>
                 </div>
                
 
@@ -68,27 +66,36 @@ use Carbon\Carbon;
             </div>
 
             <div class="col-lg-5 col-sm-6 pt-lg-0 pt-sm-0 pt-3">
-                <form class=" ">
+                <form action="{{ route('web.fees.payment') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="mb-3">
-                        <label for="dateTime" class="form-label font-14 fw-bold text-purple  ">Date and Time on the
+                        <label for="dateTime" class="form-label font-14 fw-bold text-purple ">Date and Time on the
                             Slip</label>
-                        <input type="text" class="form-control fw-500 rounded-3 border-dark" id="dateTime"
-                            placeholder="Enter date and time">
+                        <input type="datetime-local" name="dateTime" class="form-control fw-500 rounded-3 border-dark" id="dateTime" placeholder="Enter date and time" required>
+                        <input type="hidden" name="cartData" value="{{ json_encode($cart) }}">
+                        <input type="hidden" name="pay_month" value="{{ $month }}">
                     </div>
                     <div class="mb-3">
-                        <label for="selectBank" class="form-label font-14 fw-bold text-purple  ">Select the Bank</label>
-                        <select class="form-select fw-500 rounded-3 border-dark text-dark" id="selectBank">
+                        <label for="selectBank" class="form-label font-14 fw-bold text-purple ">Select the Bank</label>
+                        <select class="form-select fw-500 rounded-3 border-dark text-dark" id="selectBank" name="bank" required>
                             <option selected>Choose the bank</option>
                             <!-- Add bank options here -->
+                            <option value="sampath_bank">Sampath Bank</option>
+                            <option value="boc">BOC Bank</option>
+                            <option value="hnb">Hatton National Bank</option>
+                            <option value="commercial">Commercial Bank</option>
+                            <option value="cargills">Cargills Bank</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="transferSlip" class="form-label font-14 fw-bold text-purple  ">Choose the Transfer
                             Slip</label>
-                        <input type="file" class="form-control fw-500 rounded-3 border-dark" id="transferSlip">
+                        <input type="file" name="transferSlip" class="form-control fw-500 rounded-3 border-dark" id="transferSlip" required>
                     </div>
-                </form>
+                
                 <div class="d-flex justify-content-between align-items-center">
+                    <button type ="submit" class="btn btn-secondary fw-500 font-11 px-2 rounded-pill text-white" >Click to Update the Bank Slip</button>
+                    </form>
                     <button class="btn btn-primary fw-500 font-11 px-2 rounded-pill text-white" data-bs-toggle="modal"
                         data-bs-target="#accountBankView">View Bank Account Details</button>
                     <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="accountBankView"
@@ -108,8 +115,7 @@ use Carbon\Carbon;
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-secondary fw-500 font-11 px-2 rounded-pill text-white" data-bs-toggle="modal"
-                        data-bs-target="#slipUpdate">Click to Update the Bank Slip</button>
+                    
                     <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="slipUpdate"
                         tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -400,40 +406,7 @@ use Carbon\Carbon;
                 </div>
             </div>
         </div>
-        <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="exampleModalToggle2"
-            aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center py-5">
-                        <div class="success-checkmark">
-                            <div class="check-icon">
-                                <span class="icon-line line-tip"></span>
-                                <span class="icon-line line-long"></span>
-                                <div class="icon-circle"></div>
-                                <div class="icon-fix"></div>
-                            </div>
-                        </div>
-                        <h3 class="font-16 fw-bold  text-purple pt-4">
-                            ඔබගේ ඇණවුම සාර්ථකව LMS පද්ධතියට ඇතුලත් කරන ලදී. එය අනුමත වූ වහාම ඔබ හට පණිවිඩයක් ලබා දෙනු
-                            ලබයි. !!
-                        </h3>
-                        <h3 class="font-16 fw-bold  text-purple pb-4">
-                            ස්තුතියි !!!
-                        </h3>
-                        <h3 class="font-16 fw-bold  text-purple">
-                            Your order has been successfully placed in the LMS. You will receive a message once the
-                            order gets approved!
-                        </h3>
-                        <h3 class="font-16 fw-bold   text-purple">
-                            Thank you !!!
-                        </h3>
-                    </div>
-                </div>
-            </div>
-        </div>
+       
 
     </div>
 </div>
@@ -453,4 +426,5 @@ use Carbon\Carbon;
         paymentButton.disabled = !this.checked;
     });
 </script>
+
 @endsection

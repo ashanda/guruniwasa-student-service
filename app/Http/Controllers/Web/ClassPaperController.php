@@ -42,7 +42,7 @@ class ClasspaperController extends Controller
         $accessToken = $request->cookie('access_token');
 
        
-       //try {
+       try {
             $response = $client->get($url, [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $accessToken,
@@ -65,12 +65,12 @@ class ClasspaperController extends Controller
                     return view('web.class_paper.monthly_view',compact('body'));
                 }
             }
-    //    } catch (\Exception $e) {
-    //         // Log the error if needed and handle exceptions
-    //                 $homeHeader = 1;
-    //                 $homeFooter= 1;
-    //                 return view('web.auth.login',compact('homeHeader','homeFooter'));
-    //     }
+       } catch (\Exception $e) {
+            // Log the error if needed and handle exceptions
+                    $homeHeader = 1;
+                    $homeFooter= 1;
+                    return view('web.auth.login',compact('homeHeader','homeFooter'));
+        }
 
         
     }
