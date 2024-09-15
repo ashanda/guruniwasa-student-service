@@ -57,7 +57,7 @@ use Carbon\Carbon;
             </div>
             <p class="font-14 fw-500 text-dark text-start">Grade - <span class="fw-bolder">{{ $studentsubject['data']['student_subjects']['grade']['gname'] }}</span></p>
             <p class="font-14 fw-500 text-dark text-start">Subject - <span class="fw-bolder"> {{ $studentsubject['data']['student_subjects']['sname'] }} |
-               {{ $studentsubject['data']['student_subjects']['sname'] }} | {{ $studentsubject['data']['student_subjects']['teacher']['data']['name'] }}
+               {{ $studentsubject['data']['student_subjects']['sname'] }} | {{ $studentsubject['data']['student_subjects']['teacher']['data']['name'] ?? ' ' }}
                </span>
             </p>
             <p class="font-14 fw-500 text-dark text-start">Month - <span class="fw-bolder text-dark"> {{ $months[0]['english']}}

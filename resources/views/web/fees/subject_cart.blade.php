@@ -37,7 +37,7 @@ use Carbon\Carbon;
                     @if(count($cart) > 0)
                         <ul class="list-group fopnt-13 text-dark fw-500">
                             @foreach($cart as $item)
-                                <li class="list-group-item d-flex justify-content-between align-items-center ">{{ $item['data']['student_subjects']['sname'] }}| {{ $item['data']['student_subjects']['teacher']['data']['name'] }} | Grade: {{ $item['data']['student_subjects']['grade']['gname'] }} 
+                                <li class="list-group-item d-flex justify-content-between align-items-center ">{{ $item['data']['student_subjects']['sname'] }}| {{ $item['data']['student_subjects']['teacher']['data']['name'] ?? ' ' }} | Grade: {{ $item['data']['student_subjects']['grade']['gname'] }} 
 
                                     <span class="badge bg-primary rounded-pill">LKR {{ $item['data']['student_subjects']['fee'] }}.00</span>
                                 </li>
@@ -380,6 +380,7 @@ use Carbon\Carbon;
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body py-2 text-center">
+                        
                         <p class="font-14 fw-bolder  text-purple  ">
                             කාඩ්පතෙන් මුදල් ගෙවීම සාර්ථකව සිදු කිරීමට දෙවතා වක් ඔබ සාර්ථකව මුදල් ගෙවූ බවට තිරයේ දිස්වන
                             තුරු රැදී සිටින්න. එනම්, payment gateway එකෙහි "Payment Approved" ලෙස දිස්වූ පසු ඉන් ඉවත්
@@ -399,9 +400,15 @@ use Carbon\Carbon;
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-info fw-500 font-13 text-white" data-bs-target="#exampleModalToggle2"
+                        <form action="{{ route('card.payment') }}" method="POST">
+                            @csrf
+                        <input type="hidden" name="amount" value="{{ $totalFeeWithDiscount }}">
+                        <input type="hidden" name="cartData" value="{{ json_encode($cart) }}">
+                        <input type="hidden" name="pay_month" value="{{ $month }}">
+                        <button class="btn btn-info fw-500 font-13 text-white" type="submit" data-bs-target="#exampleModalToggle2"
                             data-bs-toggle="modal" data-bs-dismiss="modal">
                             Click to Continue</button>
+                        </form>   
                     </div>
                 </div>
             </div>

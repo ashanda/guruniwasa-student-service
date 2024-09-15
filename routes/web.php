@@ -193,6 +193,8 @@ Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('web.add
 Route::post('/remove-to-cart', [CartController::class, 'removeFromCart'])->name('web.remove-from-cart');
 
 Route::post('/bank-payment', [PaymentController::class, 'bankPayment'])->name('web.fees.payment');
+Route::post('/card-payment', [PaymentController::class, 'cardPayment'])->name('card.payment');
+
 
 
 
