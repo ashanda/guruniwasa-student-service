@@ -30,7 +30,7 @@ class ClassController extends Controller
             if ($response->getStatusCode() == 200) {
                 
                 $body = json_decode($response->getBody(), true);
-                
+
                 if (isset($body['status']) && $body['status'] === 200) {
                    
                     return view('web.classes.view',compact('body'));

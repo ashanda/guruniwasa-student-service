@@ -1,5 +1,14 @@
 @extends('web.layouts.app')
 @section('content')
+@if(session()->has('student_data'))
+    @php
+        $studentData = session('student_data');
+        
+    @endphp
+@else
+     <script>window.location = "{{ route('web.logout') }}";</script>
+@endif
+
 <div class="container-fluid">
    <div class="row align-items-center pt-2">
       <div class="col-lg-3 col-sm-3">
@@ -9,12 +18,12 @@
          </a>
       </div>
       <div class="col-lg-6 col-sm-6 text-center">
-        <p class="font-17 fw-bold text-purple text-uppercase ">SCIENCE - ABHIMAN SIR
+        <p class="font-17 fw-bold text-purple text-uppercase ">{{ request('subject_name') }} - {{ request('teacher_name') }}
         </p>
-         <h1 class="font-30 fw-bold text-uppercase text-purple">STUDENT ATTENDANCE - JANUARY
+         <h1 class="font-30 fw-bold text-uppercase text-purple">STUDENT ATTENDANCE - {{ request('month_name') }}
          </h1>
 
-         <p class="font-20 fw-500 text-purple">< STUDENT NAME > - < GRADE >
+         <p class="font-20 fw-500 text-purple text-uppercase">< {{ $studentData['full_name'] }} > - < {{ $studentData['grades']['gname'] }} >
          </p>
       </div>
 
@@ -48,23 +57,20 @@
                 <thead class="text-white gradient-background text-uppercase fw-light font-14">
                  
 
-                      <th>07.01.2023</th>
-                      <th>14.01.2023</th>
-                      <th>21.01.2023</th>
-                      <th>28.01.2023</th>
-                      <th>28.01.2023</th>
+                      <th>Class Type</th>
+                      <th>Attendance Status</th>
+                      <th>Lesson Date</th>
                    </tr>
                 </thead>
                 <tbody class="t align-items-center">
-                   <tr>
-                      <td><button type="button" class="btn btn-success font-12 px-3 fw-bolder rounded-pill text-uppercase mb-2">PHYSICAL</button>
-                        <button type="button" class="btn btn-warning font-12 px-3 fw-bolder rounded-pill text-uppercase mb-2">VIDEO</button>
-                    </td>
-                      <td><button type="button" class="btn btn-danger font-12 px-3 fw-bolder rounded-pill text-uppercase mb-2">ABSENT</button></td>
-                      <td><button type="button" class="btn btn-danger font-12 px-3 fw-bolder rounded-pill text-uppercase mb-2">POSTPONED</button></td>
-                      <td><button type="button" class="btn btn-danger font-12 px-3 fw-bolder rounded-pill text-uppercase mb-2">HOLIDAY</button></td>
-                      <td><button type="button" class="btn btn-danger font-12 px-3 fw-bolder rounded-pill text-uppercase mb-2">ABSENT</button></td>
+                   @foreach ($body['data']['attendence'] as $student_attendances)
+                    <tr>
+                      <td><button type="button" class="btn btn-success font-12 px-3 fw-bolder rounded-pill text-uppercase mb-2">{{ $student_attendances['class_type'] }}</button></td>
+                      <td><button type="button" class="btn btn-danger font-12 px-3 fw-bolder rounded-pill text-uppercase mb-2">{{ $student_attendances['attendence'] }}</button></td>
+                      <td><button type="button" class="btn btn-danger font-12 px-3 fw-bolder rounded-pill text-uppercase mb-2">{{ $student_attendances['lesson_date'] }}</button></td>
                    </tr>
+                   @endforeach
+                   
                 </tbody>
              </table>
           </div>

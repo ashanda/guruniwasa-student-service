@@ -1,8 +1,17 @@
 @extends('web.layouts.app')
 @section('content')
+
 @php
  use Carbon\Carbon;
   @endphp
+@if(session()->has('student_data'))
+    @php
+        $studentData = session('student_data');
+        
+    @endphp
+@else
+     <script>window.location = "{{ route('web.logout') }}";</script>
+@endif
 <div class="container-fluid">
    <div class="row align-items-center pt-2">
       <div class="col-lg-3 col-sm-3">
@@ -35,18 +44,27 @@
                         <img class="d-block w-100 rounded-circle" src="{{ asset('themes/default/img/place-holder.png') }}" alt="Guru Niwasa LMS">
                     </div>
                 </div>
-                <p class="font-14 fw-500 text-dark text-start">Grade - <span class="fw-bolder">Grade {{ $lesson['grade_id'] }}</span></p>
-                <p class="font-14 fw-500 text-dark text-start">Subject - <span class="fw-bolder">{{ $lesson['lesson_title'] }}</span></p>
+                <p class="font-14 fw-500 text-dark text-start">Grade - <span class="fw-bolder">{{ $lesson['grade'] }}</span></p>
+                <p class="font-14 fw-500 text-dark text-start">Subject - <span class="fw-bolder">{{ $lesson['lesson_title'] }} | {{ $lesson['teacher_name'] }}</span></p>
                 <p class="font-14 fw-500 text-dark text-start">Class Status - <span class="fw-bolder text-success">{{ $lesson['status']}}</span></p>
                 <p class="font-14 fw-500 text-dark text-start">Special Note - <span class="fw-bolder font-12">{{ $lesson['special_note'] }}</span></p>
                 <p class="font-14 fw-500 text-dark text-start">Zoom Password - <span class="fw-bolder">{{ $lesson['password'] }}</span></p>
                 <div class="row justify-content-center pt-4">
                     <div class="col-lg-10 text-white e">
-                        @if($lesson['status'] == 0)
-                            <button class="border-0 btn-cus w-100 text-uppercase font-14 text-white rounded-pill py-2 px-3 bg-success fw-500 align-items-center text-white hvr-shrink" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        @if($lesson['status'] == 'Scheduled')
+                        <form id="myForm" action="{{ route('web.student.attendancestore') }}" method="post">
+                           @csrf
+                           <input type="hidden" name="lesson_id" value="{{ $lesson['id'] }}">
+                           <input type="hidden" name="subject" value="{{ $lesson['subject_id'] }}">
+                           <input type="hidden" name="teacher_id" value="{{ $lesson['teacher_id'] }}">
+                           <input type="hidden" name="auth_id" value="{{ $studentData['id'] }}">
+                           <input type="hidden" name="type" value="{{ 'Online' }}">
+                           <input type="hidden" name="lesson_date" value="{{ $lesson['lesson_date'] }}">
+                        </form>
+                            <a href="{{ $lesson['zoom_link'] }}" id="joinLink" target="_blank" class="border-0 btn-cus w-100 text-uppercase font-14 text-white rounded-pill py-2 px-3 bg-success fw-500 align-items-center text-white hvr-shrink" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 CLICK TO JOIN <br>
                                 <span class="font-9">FIRST WEEK PASS</span>
-                            </button>
+                            </a>
                         @elseif($lesson['status'] == 1)
                             <button class="border-0 btn-cus w-100 text-uppercase font-14 text-white rounded-pill py-2 px-3 bg-danger fw-500 align-items-center text-white hvr-shrink" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 YOU CAN'T WATCH <br>
@@ -325,4 +343,29 @@
       </div> --}}
    </div>
 </div>
+@endsection
+@section('scripts')
+<script>
+  document.getElementById("joinLink").addEventListener("click", function(event) {
+  event.preventDefault(); // Prevent the default anchor behavior
+
+  // Serialize form data
+  var formData = $("#myForm").serialize();
+
+  // Submit the form using AJAX
+  $.ajax({
+    url: $("#myForm").attr('action'), // The form's action attribute
+    type: "POST",
+    data: formData,
+    success: function(response) {
+      // After the form submission is successful, open the Zoom link in a new tab
+      window.open(document.getElementById("joinLink").getAttribute("href"), '_blank');
+    },
+    error: function(xhr, status, error) {
+      // Handle the error if necessary
+      alert("An error occurred while submitting the form. Please try again.");
+    }
+  });
+});
+</script>
 @endsection

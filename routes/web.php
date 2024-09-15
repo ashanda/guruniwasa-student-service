@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Web\Home\HomeController;
 use App\Http\Controllers\Web\ClassController;
 use App\Http\Controllers\Web\VideoController;
@@ -86,7 +88,7 @@ Route::get('/video/subject/view-list', [VideoController::class, 'videoSubjectLis
 Route::get('/fees/view', [FeesController::class, 'feesView'])->name('web.fees.view');
 Route::get('/fees/class', [FeesController::class, 'feesClass'])->name('web.fees.class');
 Route::get('/fees/subject-cart', [FeesController::class, 'subjectCart'])->name('web.fees.subject_cart');
-Route::get('/subject-cart', [FeesController::class, 'subjectCart'])->name('web.subject-cart');
+Route::get('/subject-cart', [CartController::class, 'viewCart'])->name('web.subject-cart');
 
 
 // PaymentHistory
@@ -95,7 +97,8 @@ Route::get('/payment-history-list', [PaymentHistoryController::class, 'paymentHi
 
 // NoteAndPaperController
 Route::get('/note-paper-ansewer', [NoteAndPaperController::class, 'notePaper'])->name('web.note-paper.ansewer');
-Route::get('/note-paper-ansewer-list', [NoteAndPaperController::class, 'notePaperList'])->name('web.note-paper.list');
+Route::get('/note-paper-ansewer-list/{id}', [NoteAndPaperController::class, 'notePaperList'])->name('web.note-paper.list');
+Route::post('/note-paper-ansewer-upload', [NoteAndPaperController::class, 'notePaperUpload'])->name('web.note.upload');
 
 
 
@@ -127,6 +130,8 @@ Route::get('/student-talents', [StudentTalentController::class, 'studentTalent']
 Route::get('/online-exam-result', [StudentTalentController::class, 'onlineExamResult'])->name('web.online.exam_result');
 Route::get('/paper-answer', [StudentTalentController::class, 'paperAnswer'])->name('web.paper.answer');
 Route::get('/student-certificates', [StudentTalentController::class, 'studentCertificate'])->name('web.student.certificates');
+Route::post('/student-certificates-upload', [StudentTalentController::class, 'studentCertificateUpload'])->name('web.student.certificatesupload');
+
 Route::get('/talent-videos', [StudentTalentController::class, 'talentVideos'])->name('web.talent.videos');
 Route::get('/talent-videos-view', [StudentTalentController::class, 'talentVideosView'])->name('web.talent.videosView');
 Route::get('/talent-videos-lesson', [StudentTalentController::class, 'talentVideosLesson'])->name('web.talent.videosLesson');
@@ -134,6 +139,7 @@ Route::get('/my-talent-videos', [StudentTalentController::class, 'myTalentVideos
 Route::get('/other-talent-videos', [StudentTalentController::class, 'otherTalentVideos'])->name('web.other_talent');
 Route::get('/review-teacher', [StudentTalentController::class, 'reviweTeacher'])->name('web.review.teacher');
 Route::get('/term-test', [StudentTalentController::class, 'termTest'])->name('web.term.test');
+Route::post('/term-test', [StudentTalentController::class, 'termTestUpload'])->name('web.term.testupload');
 
 
 
@@ -149,6 +155,7 @@ Route::get('/online-exam-view', [OnlineExamController::class, 'onlineExamMonthly
 // Student Attendance ATTENDANCE
 
 Route::get('/student-attendance', [StudentAttendanceController::class, 'studentAttendance'])->name('web.student.attendance');
+Route::post('/student-attendance', [StudentAttendanceController::class, 'studentAttendancestore'])->name('web.student.attendancestore');
 Route::get('/student-attendance-view', [StudentAttendanceController::class, 'studentAttendanceMonthly'])->name('web.student_attendance.view');
 Route::get('/student-attendance-check', [StudentAttendanceController::class, 'studentAttendanceCheck'])->name('web.student_attendance.check');
 
@@ -177,6 +184,18 @@ Route::get('/analysis-report', [AnalysisReportController::class, 'analysisReport
 // Teacher Subject
 Route::get('/teacher-subject', [TeacherSubjectController::class, 'teacherSubject'])->name('web.teacher.subject');
 Route::get('/request-subject',[TeacherSubjectController::class, 'requestSubject'])->name('web.teacher.request-subject');
+
+Route::post('/remove-subject',[TeacherSubjectController::class, 'removeSubject'])->name('web.remove.subject');
+Route::post('/add-subject',[TeacherSubjectController::class, 'addSubject'])->name('web.add.subject');
+
+
+Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('web.add-to-cart');
+Route::post('/remove-to-cart', [CartController::class, 'removeFromCart'])->name('web.remove-from-cart');
+
+Route::post('/bank-payment', [PaymentController::class, 'bankPayment'])->name('web.fees.payment');
+Route::post('/card-payment', [PaymentController::class, 'cardPayment'])->name('card.payment');
+
+
 
 
 });
